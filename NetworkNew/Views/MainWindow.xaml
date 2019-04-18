@@ -1,0 +1,33 @@
+﻿<Window x:Class="NetworkNew.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetworkNew"
+        xmlns:vm="clr-namespace:NetworkNew.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="450">
+    <Window.Resources>
+
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        <ItemsControl 
+            ItemsSource="{Binding ParticleGraphics}" 
+            ItemsPanel="{StaticResource ItemsPanelTemplate1}" 
+            ItemTemplate="{StaticResource TemplateParticleConfigurationParticleGraphic}"
+            ItemContainerStyle ="{StaticResource ParticleConfigurationStyleParticleGraphic}"/>
+        <StackPanel Grid.Column="1">
+            <TextBox Style="{StaticResource BaseTextBox}" Text="{Binding State, Mode=OneWay}" IsReadOnly="True"/>
+            <Button Style="{StaticResource BaseButton}" Content="Play" Command="{Binding ToPlay}"/>
+            <Button Style="{StaticResource BaseButton}" Content="Pause" Command="{Binding ToPause}"/>
+            <CheckBox Content="OnMove" Margin="10" IsChecked="{Binding OnMove}"/>            
+        </StackPanel>
+    </Grid>
+</Window>
