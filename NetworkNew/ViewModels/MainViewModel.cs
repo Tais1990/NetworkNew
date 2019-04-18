@@ -23,6 +23,7 @@ namespace NetworkNew.ViewModels
             {
                 _state = value;
                 RaisePropertyChanged("State");
+                RaisePropertyChanged("OnMove");
             }
         }        
 
@@ -33,9 +34,8 @@ namespace NetworkNew.ViewModels
             History history = new History();
             currentConfiguration = new Configuration();
             RaisePropertyChanged("currentConfiguration");
-            this.OnMove = false;
             this.State = State.NotBegin;
-            foreach (Particle particle in this.Particles)
+            foreach (Particle particle in currentConfiguration.particles)
             {
                 this._ParticleGraphics.Add(new ParticleGraphic(particle));
             }
@@ -50,22 +50,23 @@ namespace NetworkNew.ViewModels
             */
         }
 
-        public bool OnMove { get; set; }
+        public bool OnMove => State.Equals(State.Play);
+
+
         public DelegateCommand ToPlay
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
-                    this.OnMove = true;                    
-                    RaisePropertyChanged("OnMove");
+                    this.State = State.Play;
                     foreach (ParticleGraphic particle in this._ParticleGraphics)
                     {
                         particle.Change = true;
                         particle.RaisePropertyChanged("Change");
                     }
                 },
-                (obj) => !this.OnMove);
+                (obj) => this.State.Equals(State.Pause));
             }
         }
         public DelegateCommand ToPause
@@ -74,16 +75,30 @@ namespace NetworkNew.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    this.OnMove = false;
-                    
-                    RaisePropertyChanged("OnMove");
+                    this.State = State.Pause;
                     foreach (ParticleGraphic particle in this._ParticleGraphics)
                     {
                         particle.Change = false;
                         particle.RaisePropertyChanged("Change");
                     }
                 },
-                (obj) => this.OnMove);
+                (obj) => this.State.Equals(State.Play));
+            }
+        }
+        public DelegateCommand ToReStart
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    this.State = State.Play;
+                    foreach (ParticleGraphic particle in this._ParticleGraphics)
+                    {
+                        particle.Change = true;
+                        particle.RaisePropertyChanged("Change");
+                    }
+                },
+                (obj) => (this.State.Equals(State.Pause) || this.State.Equals(State.NotBegin)));
             }
         }
 
@@ -91,7 +106,7 @@ namespace NetworkNew.ViewModels
 
 
 
-        public ObservableCollection<Particle> Particles => new ObservableCollection<Particle>(currentConfiguration.particles);
+        //private ObservableCollection<Particle> Particles => new ObservableCollection<Particle>(currentConfiguration.particles);
         public ObservableCollection<ParticleGraphic> ParticleGraphics => new ObservableCollection<ParticleGraphic>(_ParticleGraphics);
 
         

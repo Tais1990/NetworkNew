@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetworkNew"
         xmlns:vm="clr-namespace:NetworkNew.ViewModels"
+        xmlns:usercontrols="clr-namespace:NetworkNew.UserControls"
+        xmlns:styles="clr-namespace:NetworkNew.Styles"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="450">
     <Window.Resources>
@@ -24,10 +26,12 @@
             ItemTemplate="{StaticResource TemplateParticleConfigurationParticleGraphic}"
             ItemContainerStyle ="{StaticResource ParticleConfigurationStyleParticleGraphic}"/>
         <StackPanel Grid.Column="1">
-            <TextBox Style="{StaticResource BaseTextBox}" Text="{Binding State, Mode=OneWay}" IsReadOnly="True"/>
+            <TextBox Style="{StaticResource BaseTextBox}" Text="{Binding State, Mode=OneWay}" IsReadOnly="True" HorizontalAlignment="Center"/>
+            <Button Style="{StaticResource BaseButton}" Content="ReStart" Command="{Binding ToReStart}"/>
             <Button Style="{StaticResource BaseButton}" Content="Play" Command="{Binding ToPlay}"/>
             <Button Style="{StaticResource BaseButton}" Content="Pause" Command="{Binding ToPause}"/>
-            <CheckBox Content="OnMove" Margin="10" IsChecked="{Binding OnMove}"/>            
+            <CheckBox Style="{StaticResource BaseCheckBox}" Content="OnMove" Margin="10" IsChecked="{Binding OnMove, Mode=OneWay}" IsEnabled="False"/>
+            
         </StackPanel>
     </Grid>
 </Window>
