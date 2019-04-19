@@ -16,7 +16,7 @@
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
         <Canvas/>
     </ItemsPanelTemplate>
-    <Style x:Key="ParticleConfigurationStyle">
+    <Style x:Key="ParticleConfigurationStyle" >
         
         <Style.Triggers>
             <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.OnMove}" Value="True">-->
@@ -52,16 +52,30 @@
     </DataTemplate>
 
     <PathGeometry x:Key="geometryPath">
-        <PathFigure IsClosed="True" StartPoint="10, 10">
+        <!--<PathFigure IsClosed="False" StartPoint="{Binding StartPoint, Mode=OneWay}">-->
+        <PathFigure IsClosed="False" StartPoint="10,10">
             <PolyLineSegment Points="220,10 220,175 10,175" />
         </PathFigure>
     </PathGeometry>
 
-    
-    
+    <Storyboard x:Key="Storyboard1">
+        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Top)"
+                                       Duration="0:0:5" RepeatBehavior="Forever"
+                                       PathGeometry="{StaticResource geometryPath}" Source="Y" >
+        </DoubleAnimationUsingPath>
+        <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Left)"
+                                       Duration="0:0:5" RepeatBehavior="Forever"
+                                       PathGeometry="{StaticResource geometryPath}" Source="X" >
+        </DoubleAnimationUsingPath>
+    </Storyboard>
+
+
+
     <Style x:Key="ParticleConfigurationStyleParticleGraphic">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Change}" Value="True">
+            <DataTrigger 
+                Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.StateAction}" 
+                Value="{x:Static viewmodel:StateAction.ReStart}">
                 <DataTrigger.EnterActions>
                     <BeginStoryboard Name="StoryboardTest">
                         <Storyboard>
@@ -76,18 +90,26 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </DataTrigger.EnterActions>
-                <DataTrigger.ExitActions>
-                    <!--<StopStoryboard BeginStoryboardName="StoryboardTest" />-->
+            </DataTrigger>
+            <DataTrigger 
+                Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.StateAction}" 
+                Value="{x:Static viewmodel:StateAction.Pause}">
+                <DataTrigger.EnterActions>
                     <PauseStoryboard BeginStoryboardName="StoryboardTest"/>
-                    <!--<ResumeStoryboard BeginStoryboardName="StoryboardTest"/>-->
-                </DataTrigger.ExitActions>
-                
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+            <DataTrigger 
+                Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.StateAction}" 
+                Value="{x:Static viewmodel:StateAction.Play}">
+                <DataTrigger.EnterActions>
+                    <ResumeStoryboard BeginStoryboardName="StoryboardTest"/>
+                </DataTrigger.EnterActions>
             </DataTrigger>
         </Style.Triggers>
-        <Setter Property="Canvas.Top" Value="50"/>
-        <Setter Property="Canvas.Left" Value="50"/>
-
-
+        
+        <Setter Property="Canvas.Top" Value="{Binding model.Y}"/>
+        <Setter Property="Canvas.Left" Value="{Binding model.X}"/>
+        
     </Style>
 
 </ResourceDictionary>

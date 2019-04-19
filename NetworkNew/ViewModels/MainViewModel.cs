@@ -8,22 +8,41 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NetworkNew.ViewModels
 {
+    /// <summary>
+    /// состояние системы
+    /// </summary>
     public enum State { NotBegin, Play, Pause}
+    /// <summary>
+    ///  переход между состояниями системы
+    /// </summary>
+    public enum StateAction { ReStart, Play, Pause, NotBegin}
     
     class MainViewModel : BaseVM
-    {   
-        private State _state;        
+    {
+        /// <summary>
+        /// переход между состояниями системы
+        /// </summary>
+        public StateAction StateAction { get; set; }
+        /// <summary>
+        /// состояние системы
+        /// </summary>
+        private State _state;
+        /// <summary>
+        /// состояние системы
+        /// </summary>
         public State State
         {
             get { return _state; }
             set
-            {
+            {                
                 _state = value;
                 RaisePropertyChanged("State");
                 RaisePropertyChanged("OnMove");
+                RaisePropertyChanged("StateAction");
             }
         }        
 
@@ -35,6 +54,7 @@ namespace NetworkNew.ViewModels
             currentConfiguration = new Configuration();
             RaisePropertyChanged("currentConfiguration");
             this.State = State.NotBegin;
+            this.StateAction = StateAction.NotBegin;
             foreach (Particle particle in currentConfiguration.particles)
             {
                 this._ParticleGraphics.Add(new ParticleGraphic(particle));
@@ -59,12 +79,10 @@ namespace NetworkNew.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
+                    // вычисление состояния перехода
+                    this.StateAction = StateAction.Play;
+                    // само состояние
                     this.State = State.Play;
-                    foreach (ParticleGraphic particle in this._ParticleGraphics)
-                    {
-                        particle.Change = true;
-                        particle.RaisePropertyChanged("Change");
-                    }
                 },
                 (obj) => this.State.Equals(State.Pause));
             }
@@ -75,12 +93,10 @@ namespace NetworkNew.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
+                    // вычисление состояния перехода
+                    this.StateAction = StateAction.Pause;
+                    // само состояние
                     this.State = State.Pause;
-                    foreach (ParticleGraphic particle in this._ParticleGraphics)
-                    {
-                        particle.Change = false;
-                        particle.RaisePropertyChanged("Change");
-                    }
                 },
                 (obj) => this.State.Equals(State.Play));
             }
@@ -91,43 +107,29 @@ namespace NetworkNew.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
+                    // вычисление состояния перехода
+                    this.StateAction = StateAction.ReStart;
+                    // само состояние
                     this.State = State.Play;
-                    foreach (ParticleGraphic particle in this._ParticleGraphics)
-                    {
-                        particle.Change = true;
-                        particle.RaisePropertyChanged("Change");
-                    }
                 },
                 (obj) => (this.State.Equals(State.Pause) || this.State.Equals(State.NotBegin)));
             }
         }
 
         private Collection<ParticleGraphic> _ParticleGraphics = new Collection<ParticleGraphic>();
-
-
-
-        //private ObservableCollection<Particle> Particles => new ObservableCollection<Particle>(currentConfiguration.particles);
-        public ObservableCollection<ParticleGraphic> ParticleGraphics => new ObservableCollection<ParticleGraphic>(_ParticleGraphics);
-
-        
+        public ObservableCollection<ParticleGraphic> ParticleGraphics => new ObservableCollection<ParticleGraphic>(_ParticleGraphics);       
 
     }
     public class ParticleGraphic : BaseVM
     {
-        public string StartPoint { get; set; }
+        public Particle model { get; set; }
+        public Point StartPoint { get; set; }
         public string Points { get; set; }
-        public bool Change { get; set; }
-
         public ParticleGraphic(Particle particle)
         {
-            this.StartPoint = string.Format(@"{0}, {1}", particle.X, particle.Y);
-            this.Points = string.Format(@"{0},{1}", particle.X + 100, particle.Y + 100);
-            this.Change = false;
-        }
-
-        public void move()
-        {
-            this.Change = true;
-        }
+            this.model = particle;
+            this.StartPoint = new Point(particle.X, particle.Y);
+            this.Points = string.Format(@"{0},{1} {2},{3}", particle.X + 100, particle.Y + 100, particle.X + 50, particle.Y + 50);
+        }        
     }
 }

@@ -20,11 +20,19 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
+
+        <!---
         <ItemsControl 
             ItemsSource="{Binding ParticleGraphics}" 
             ItemsPanel="{StaticResource ItemsPanelTemplate1}" 
             ItemTemplate="{StaticResource TemplateParticleConfigurationParticleGraphic}"
             ItemContainerStyle ="{StaticResource ParticleConfigurationStyleParticleGraphic}"/>
+        
+-->
+        
+        <usercontrols:MoveParticle 
+            ItemsSource="{Binding ParticleGraphics}"/>
+
         <StackPanel Grid.Column="1">
             <TextBox Style="{StaticResource BaseTextBox}" Text="{Binding State, Mode=OneWay}" IsReadOnly="True" HorizontalAlignment="Center"/>
             <Button Style="{StaticResource BaseButton}" Content="ReStart" Command="{Binding ToReStart}"/>
