@@ -39,8 +39,8 @@ namespace NetworkNew.Models
         public Configuration()
         {
             this.particles = new Collection<Particle>();
-            this.particles.Add(new Particle(50, 150));
-            this.particles.Add(new Particle(200, 100));
+            this.particles.Add(new Particle(10, 10));
+            this.particles.Add(new Particle(50, 100));
             this.currentTime = 0;
         }
 

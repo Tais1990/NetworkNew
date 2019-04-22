@@ -88,6 +88,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\MoveParticle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Svg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,8 +107,9 @@
     <Compile Include="Models\BaseVM.cs" />
     <Compile Include="Models\Particle.cs" />
     <Compile Include="Styles\Icons.cs" />
-    <Compile Include="UserControls\MoveParticle.cs" />
-    <Compile Include="UserControls\MoveParticleStyleSelector.cs" />
+    <Compile Include="UserControls\MoveParticle.xaml.cs">
+      <DependentUpon>MoveParticle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Svg.xaml.cs">
       <DependentUpon>Svg.xaml</DependentUpon>
     </Compile>
@@ -141,6 +146,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="archives\xaml.data.trigger.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="archives\cs.event.trigger.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="archives\information.link.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

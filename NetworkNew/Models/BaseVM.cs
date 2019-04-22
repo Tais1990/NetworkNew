@@ -16,7 +16,5 @@ namespace NetworkNew.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-
-        
     }
 }

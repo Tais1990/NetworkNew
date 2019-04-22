@@ -1,0 +1,16 @@
+﻿https://social.msdn.microsoft.com/Forums/vstudio/en-US/797753f4-5db2-4852-a9fb-1ed989fe6413/add-datatrigger-programmatically?forum=wpf
+https://metanit.com/sharp/wpf/11.php
+http://qaru.site/questions/1747375/wpf-trigger-when-property-and-data-value-are-true
+https://metanit.com/sharp/wpf/17.3.php (геометрический путь)
+https://www.codeproject.com/Articles/115366/How-to-create-your-own-control-library-how-to-tips
+https://professorweb.ru/my/WPF/binding_and_styles_WPF/level20/20_3.php (переопределён настраиваемы контрол, и разные статические стили для разных темплейтов)
+https://www.youtube.com/watch?v=iFL4XoS627I
+http://codehelper.ru/questions/56/new/%D0%BA%D0%B0%D0%BA-%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C-%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF-%D0%BA-%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC%D1%83-%D0%B8%D0%B7-%D0%B4%D0%BE%D1%87%D0%B5%D1%80%D0%BD%D0%B8%D1%85-%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-itemscontrol-%D0%B2-wpf
+http://qaru.site/questions/5980484/create-a-custom-control-with-the-combination-of-multiple-controls-in-wpf-c
+https://habr.com/ru/post/102105/
+https://www.wpftutorial.net/HowToCreateACustomControl.html
+https://ru.stackoverflow.com/questions/587552/custom-control-wpf (самописный прогресс бар)
+http://qaru.site/questions/5980484/create-a-custom-control-with-the-combination-of-multiple-controls-in-wpf-c (Создание CustomConrol)
+https://docs.microsoft.com/ru-ru/dotnet/framework/wpf/graphics-multimedia/how-to-animate-an-object-along-a-path-double-animation (внимация по геометрическому пути)
+http://qaru.site/questions/2239265/how-to-create-beginstoryboard-in-code-behind-for-wpf (создание триггера из кода)
+

@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="NetworkNew.UserControls.MoveParticle"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NetworkNew.UserControls"
+             xmlns:vm="clr-namespace:NetworkNew.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
+    <Grid Name="MyGrid">
+        <Grid>            
+            <Canvas Name="MyCanva">
+                <!--
+                <StackPanel>
+                    <TextBlock Name="text"></TextBlock>
+                    <TextBlock Name="StateControl" Text="{Binding StateAction}"/>
+                </StackPanel>
+                
+                <Ellipse Fill="Red" Canvas.Left="100" Canvas.Top="100" Height="50" Width="50" Name="TestEllipse">
+                    <Ellipse.Style>
+                        <Style>
+                            <Style.Triggers>
+                               <DataTrigger Binding="{Binding StateAction}" Value="{x:Static vm:StateAction.ReStart}">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                  Storyboard.TargetProperty="Opacity" From="1"
+                  To="0" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>                                   
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+               -->
+            </Canvas>
+        </Grid>
+    </Grid>
+</UserControl>

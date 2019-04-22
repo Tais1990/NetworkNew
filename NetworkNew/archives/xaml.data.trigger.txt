@@ -1,0 +1,44 @@
+﻿// xaml кода движения частиц
+// не получилось - в графический путь закинуть биндиги
+// продобала сделать через CusomControl (настраеваемый) - не помогло 
+// (в нём есть плюшка - в зависимости от темплейта - можно для страки выбрать один из статических классов) ()
+//https://professorweb.ru/my/WPF/binding_and_styles_WPF/level20/20_3.php 
+// поэтому перешла полностью на UserControl (пользовательский)
+<Style x:Key="DefaultStyle" TargetType="ContentPresenter">        
+        <Setter Property="Canvas.Left" Value="{Binding model.X}"/>
+        <Setter Property="Canvas.Top" Value="{Binding model.Y}"/>
+        <Style.Triggers>
+            <DataTrigger x:Name="BeginTrigger"
+                                                Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Sty}" 
+                                                Value="{x:Static viewmodel:StateAction.ReStart}">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard Name="StoryboardTest">
+                        <Storyboard>
+                            <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Top)" 
+                                                               Duration="0:0:5" RepeatBehavior="Forever"
+                                                               PathGeometry="{StaticResource geometryPath}" Source="Y" >
+                            </DoubleAnimationUsingPath>
+                            <DoubleAnimationUsingPath Storyboard.TargetProperty="(Canvas.Left)"
+                                                               Duration="0:0:5" RepeatBehavior="Forever"
+                                                               PathGeometry="{StaticResource geometryPath}" Source="X" >
+                            </DoubleAnimationUsingPath>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+            <DataTrigger 
+                Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.StateAction}" 
+                Value="{x:Static viewmodel:StateAction.Pause}">
+                <DataTrigger.EnterActions>
+                    <PauseStoryboard BeginStoryboardName="StoryboardTest"/>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+            <DataTrigger 
+                Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.StateAction}" 
+                Value="{x:Static viewmodel:StateAction.Play}">
+                <DataTrigger.EnterActions>
+                    <ResumeStoryboard BeginStoryboardName="StoryboardTest"/>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>

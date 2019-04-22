@@ -25,7 +25,7 @@ namespace NetworkNew.ViewModels
     {
         /// <summary>
         /// переход между состояниями системы
-        /// </summary>
+        /// </summary>        
         public StateAction StateAction { get; set; }
         /// <summary>
         /// состояние системы
@@ -51,14 +51,25 @@ namespace NetworkNew.ViewModels
         public MainViewModel()
         {
             History history = new History();
-            currentConfiguration = new Configuration();
+            currentConfiguration = history.history.FirstOrDefault();
             RaisePropertyChanged("currentConfiguration");
             this.State = State.NotBegin;
             this.StateAction = StateAction.NotBegin;
+            // задаём изначальное положение частиц
             foreach (Particle particle in currentConfiguration.particles)
             {
                 this._ParticleGraphics.Add(new ParticleGraphic(particle));
             }
+
+            // реализуем движение
+            foreach (Configuration conf in history.history)
+            {
+                for (int i = 0; i < conf.particles.Count; i++)
+                {
+                    this._ParticleGraphics[i].Points.Add(new Point(conf.particles[i].X, conf.particles[i].Y));
+                }
+            }           
+            
             /*
             Task.Factory.StartNew(() =>
             {
@@ -117,19 +128,31 @@ namespace NetworkNew.ViewModels
         }
 
         private Collection<ParticleGraphic> _ParticleGraphics = new Collection<ParticleGraphic>();
-        public ObservableCollection<ParticleGraphic> ParticleGraphics => new ObservableCollection<ParticleGraphic>(_ParticleGraphics);       
+        public ObservableCollection<ParticleGraphic> ParticleGraphics => new ObservableCollection<ParticleGraphic>(_ParticleGraphics);
+        public CollectionParticleGraphic collectionParticleGraphic => new CollectionParticleGraphic((Collection<ParticleGraphic>)ParticleGraphics);
 
     }
     public class ParticleGraphic : BaseVM
     {
         public Particle model { get; set; }
         public Point StartPoint { get; set; }
-        public string Points { get; set; }
+        public Collection<Point> Points { get; set; }
         public ParticleGraphic(Particle particle)
         {
             this.model = particle;
             this.StartPoint = new Point(particle.X, particle.Y);
-            this.Points = string.Format(@"{0},{1} {2},{3}", particle.X + 100, particle.Y + 100, particle.X + 50, particle.Y + 50);
-        }        
+            this.Points = new Collection<Point>();            
+        }
+    }
+    /// <summary>
+    /// Инкапсляция коллекции графических объектов
+    /// </summary>
+    public class CollectionParticleGraphic
+    {
+        public Collection<ParticleGraphic> particles { get; set; }
+        public CollectionParticleGraphic(Collection<ParticleGraphic> collection)
+        {
+            this.particles = collection;
+        }
     }
 }
